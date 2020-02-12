@@ -31,13 +31,19 @@ class Blockchain(object):
         """
 
         block = {
-            # TODO
+            'index': len(self.chain) + 1,
+            'timestamp': time(),
+            'transactions': self.current_transactions,
+            'proof': proof,
+            'previous_block': previous_hash or self.hash(self.chain[-1]),
         }
 
         # Reset the current list of transactions
-        # Append the chain to the block
+        self.current_transactions = []
+        # Append the block to the chain
+        self.chain.append(block)
         # Return the new block
-        pass
+        return block
 
     def hash(self, block):
         """
@@ -109,7 +115,7 @@ node_identifier = str(uuid4()).replace('-', '')
 
 # Instantiate the Blockchain
 blockchain = Blockchain()
-
+print(blockchain.chain)
 
 @app.route('/mine', methods=['GET'])
 def mine():
@@ -119,6 +125,7 @@ def mine():
 
     response = {
         # TODO: Send a JSON response with the new block
+        "message": "Hello, world!"
     }
 
     return jsonify(response), 200
@@ -127,7 +134,8 @@ def mine():
 @app.route('/chain', methods=['GET'])
 def full_chain():
     response = {
-        # TODO: Return the chain and its current length
+        'chain': blockchain.chain,
+        'length': len(blockchain.chain),
     }
     return jsonify(response), 200
 
