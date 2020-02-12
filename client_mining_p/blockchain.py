@@ -112,6 +112,7 @@ blockchain = Blockchain()
 @app.route('/mine', methods=['POST'])
 def mine():
     data = request.get_json()
+    response = {}
 
     # Check that 'proof' and 'id' are in request
     if not data.get('proof') or not data.get('id'):
@@ -136,14 +137,12 @@ def mine():
             "message": "New Block Forged"
         }
 
-        return jsonify(response), 200
-
     else:
         response = {
             "message": "Mine Failed"
         }
 
-        return jsonify(response), 200
+    return jsonify(response), 200
 
 
 @app.route('/chain', methods=['GET'])

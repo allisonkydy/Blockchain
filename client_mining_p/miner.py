@@ -4,6 +4,8 @@ import requests
 import sys
 import json
 
+import time
+
 
 def proof_of_work(block):
     """
@@ -16,9 +18,12 @@ def proof_of_work(block):
     block_string = json.dumps(block, sort_keys=True)
     proof = 0
     print("Proof search start")
+    start_time = time.time()
     while valid_proof(block_string, proof) is False:
         proof += 1
+    end_time = time.time()
     print("Proof search end")
+    print(f"Mine runtime: {end_time - start_time} seconds")
 
     return proof
 
