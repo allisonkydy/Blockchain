@@ -145,12 +145,16 @@ def mine():
     if is_valid:
         # Forge the new Block by adding it to the chain with the proof
         previous_hash = blockchain.hash(blockchain.last_block)
+
+        block_index = blockchain.new_transaction(0, data['id'], 1)
+
         new_block = blockchain.new_block(data['proof'], previous_hash)
 
         response = {
             # Send a JSON response with the new block
             "block": new_block,
-            "message": "New Block Forged"
+            "message": "New Block Forged",
+            "reward": f"Reward paid in block {block_index}"
         }
 
     else:
@@ -175,6 +179,26 @@ def last_block():
     response = {
         'last_block': blockchain.last_block
     }
+    return jsonify(response), 200
+
+@app.route('/transaction/new', methods=['POST'])
+def receive_new_transaction():
+    data = request.get_json()
+
+    required = ['sender', 'recipient', 'amount']
+    if not all(k in data for in required):
+        response = {
+            "message": "Bad request: must provide sender, recipient, and amount",
+        }
+
+        return jsonify(response), 400
+
+    block_index = blockchain.new_transaction(data['sender'], data['recipient'], data['amount'])
+
+    response = {
+        "message": f"Transaction Success - included in block {block_index}"
+    }
+
     return jsonify(response), 200
 
 
