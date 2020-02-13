@@ -113,7 +113,7 @@ class Blockchain(object):
         guess = f"{block_string}{proof}".encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
 
-        return guess_hash[:6] == "000000"
+        return guess_hash[:3] == "000"
 
 
 # Instantiate our Node
@@ -186,7 +186,7 @@ def receive_new_transaction():
     data = request.get_json()
 
     required = ['sender', 'recipient', 'amount']
-    if not all(k in data for in required):
+    if not all(k in data for k in required):
         response = {
             "message": "Bad request: must provide sender, recipient, and amount",
         }
