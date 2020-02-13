@@ -22,6 +22,7 @@ const IdForm = ({ handleId }) => {
                     type="text"
                     value={input}
                     onChange={e => handleInput(e)}
+                    autoFocus={true}
                 />
             </label>
             <button
