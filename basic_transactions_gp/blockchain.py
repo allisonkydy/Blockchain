@@ -186,7 +186,7 @@ def last_block():
 @app.route('/transaction/new', methods=['POST'])
 def receive_new_transaction():
     data = request.get_json()
-
+    
     required = ['sender', 'recipient', 'amount']
     if not all(k in data for k in required):
         response = {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import submitIcon from '../assets/enter.svg';
 
 const IdForm = ({ handleId }) => {
     const [input, setInput] = useState("");
@@ -15,20 +16,18 @@ const IdForm = ({ handleId }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Enter id:
-                <input 
-                    type="text"
-                    value={input}
-                    onChange={e => handleInput(e)}
-                    autoFocus={true}
-                />
-            </label>
+        <form className="id-form" onSubmit={handleSubmit}>
+            <input 
+                type="text"
+                value={input}
+                onChange={e => handleInput(e)}
+                autoFocus={true}
+            />
             <button
                 type="submit"
+                className="btn"
             >
-                Submit
+                <img className="icon" src={submitIcon} />
             </button>
         </form>
     );
